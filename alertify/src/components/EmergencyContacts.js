@@ -1,55 +1,30 @@
 import React from "react";
+import "./EmergencyContacts.css";
 
 function EmergencyContacts() {
-  // Sample emergency contacts
   const contacts = [
-    { name: "Police", number: "100" },
-    { name: "Fire Brigade", number: "101" },
-    { name: "Ambulance", number: "102" },
+    { name: "Police", number: "100", icon: "🚓" },
+    { name: "Ambulance", number: "108", icon: "🚑" },
+    { name: "Fire", number: "101", icon: "🔥" },
   ];
 
-  // Simulate calling a number
-  const handleCall = (number) => {
-    alert(`📞 Calling ${number}... (simulated)`);
-  };
-
   return (
-    <div style={{ marginTop: "30px" }}>
-      <h2>📱 Emergency Contacts</h2>
-      <ul style={{ listStyleType: "none", padding: 0 }}>
-        {contacts.map((contact, index) => (
-          <li
-            key={index}
-            style={{
-              marginBottom: "10px",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span>
-              {contact.name} — {contact.number}
-            </span>
-            <button
-              onClick={() => handleCall(contact.number)}
-              style={{
-                padding: "5px 10px",
-                backgroundColor: "#1976d2",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Call
-            </button>
-          </li>
+    <section className="emergency-section">
+      <h2>Emergency Contacts</h2>
+
+      <div className="emergency-grid">
+        {contacts.map((c, index) => (
+          <div key={index} className="emergency-card">
+            <div className="icon">{c.icon}</div>
+            <h3>{c.name}</h3>
+            <p>{c.number}</p>
+            <a href={`tel:${c.number}`} className="call-btn">
+              Call Now
+            </a>
+          </div>
         ))}
-      </ul>
-    </div>
+      </div>
+    </section>
   );
 }
 

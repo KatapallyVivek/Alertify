@@ -13,7 +13,6 @@ function App() {
   const [showSignUp, setShowSignUp] = useState(false);
   const [homeOpen, setHomeOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
   const [showTrustedContacts, setShowTrustedContacts] = useState(false);
   const [viewContactsOpen, setViewContactsOpen] = useState(false);
   const [showYourNumber, setShowYourNumber] = useState(false);
@@ -38,28 +37,24 @@ function App() {
     alert("Account created successfully! Please log in.");
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-    setShowSignUp(false);
-  };
+const handleLogout = () => {
+  const confirmLogout = window.confirm("Are you sure you want to logout?");
+  if (!confirmLogout) return; // Cancel logout
+
+  localStorage.clear();
+  setIsLoggedIn(false);
+  setShowSignUp(false);
+};
+
 
   const toggleHomeDropdown = () => {
     setHomeOpen(!homeOpen);
     setAboutOpen(false);
-    setContactOpen(false);
   };
 
   const toggleAboutDropdown = () => {
     setAboutOpen(!aboutOpen);
     setHomeOpen(false);
-    setContactOpen(false);
-  };
-
-  const toggleContactDropdown = () => {
-    setContactOpen(!contactOpen);
-    setHomeOpen(false);
-    setAboutOpen(false);
   };
 
   const handleShowTrustedContacts = () => {
@@ -82,7 +77,6 @@ function App() {
       ) {
         setHomeOpen(false);
         setAboutOpen(false);
-        setContactOpen(false);
         setShowTrustedContacts(false);
         setViewContactsOpen(false);
       }
@@ -92,109 +86,67 @@ function App() {
   }, []);
 
   if (!isLoggedIn) {
-    if (showSignUp) {
-      return (
-        <SignUp
-          onSignUp={handleSignUp}
-          onSwitchToLogin={() => setShowSignUp(false)}
-        />
-      );
-    } else {
-      return (
-        <LoginPage
-          onLogin={handleLogin}
-          onSwitchToSignUp={() => setShowSignUp(true)}
-        />
-      );
-    }
+    return showSignUp ? (
+      <SignUp
+        onSignUp={handleSignUp}
+        onSwitchToLogin={() => setShowSignUp(false)}
+      />
+    ) : (
+      <LoginPage
+        onLogin={handleLogin}
+        onSwitchToSignUp={() => setShowSignUp(true)}
+      />
+    );
   }
 
   return (
     <div>
       <header>
         <h2>Alertify 🚨</h2>
+
         <nav className="nav-links">
-          {/* HOME Dropdown */}
+          {/* contacts */}
           <div className="dropdown" ref={dropdownRef}>
             <button className="dropbtn" onClick={toggleHomeDropdown}>
-              Home
+              Contacts
             </button>
             <div className={`dropdown-content ${homeOpen ? "show" : ""}`}>
-              <a href="#add-contact" onClick={handleShowTrustedContacts}>
+              <a href="#add" onClick={handleShowTrustedContacts}>
                 Add Trusted Contacts
               </a>
-              <a href="#view-contacts" onClick={handleViewContacts}>
+              <a href="#view" onClick={handleViewContacts}>
                 View Saved Contacts
               </a>
-              <a href="#your-number" onClick={() => setShowYourNumber(true)}>
+              <a href="#number" onClick={() => setShowYourNumber(true)}>
                 Your Number
-              </a>
-              <a href="#logout" onClick={handleLogout}>
-                Logout
               </a>
             </div>
           </div>
 
-          {/* ABOUT Dropdown */}
+          {/* ABOUT */}
           <div className="dropdown">
             <button className="dropbtn" onClick={toggleAboutDropdown}>
               About
             </button>
             <div className={`dropdown-content ${aboutOpen ? "show" : ""}`}>
-              <p style={{ margin: "10px", color: "#00ffff", lineHeight: "1.4" }}>
-                Alertify is a smart safety web app specially designed for women.
-                It helps users stay safe by instantly sharing their live
+              <p style={{ margin: "10px", color: "#00ffff" }}>
+                Alertify is a smart safety app that instantly shares your live
                 location with trusted contacts via WhatsApp.
               </p>
             </div>
           </div>
 
-          {/* CONTACT Dropdown */}
-<div className="dropdown">
-  <button className="dropbtn" onClick={toggleContactDropdown}>
-    Contact
-  </button>
-  <div
-    className={`dropdown-content ${contactOpen ? "show" : ""}`}
-    style={{
-      left: "auto",
-      right: "10px", // ✅ move slightly left so it stays visible
-      minWidth: "220px", // ✅ ensure enough width
-      textAlign: "left",
-    }}
-  >
-    <p style={{ margin: "10px", color: "#00ffff", lineHeight: "1.6" }}>
-      📧{" "}
-      <a
-        href="mailto:vivekkatapally03@gmail.com"
-        style={{
-          color: "#00ffff",
-          textDecoration: "underline",
-        }}
-      >
-        vivekkatapally03@gmail.com
-      </a>
-      {/* <br /> */}
-      📞{" "}
-      <a
-        href="tel:+916304209640"
-        style={{
-          color: "#00ffff",
-          textDecoration: "underline",
-        }}
-      >
-        +91 6304209640
-      </a>
-    </p>
-  </div>
-</div>
-
+          {/* LOGOUT BUTTON */}
+          <button className="logout-header-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </nav>
       </header>
 
       <div className="App">
         <h1 className="typewriter">Welcome to Alertify</h1>
         <p>Smart Safety Web App</p>
+
         <HelpButton />
         <EmergencyContacts />
 
@@ -203,24 +155,24 @@ function App() {
             <TrustedContacts onClose={() => setShowTrustedContacts(false)} />
           </div>
         )}
+
         {viewContactsOpen && (
           <div ref={viewRef}>
             <ViewContacts onClose={() => setViewContactsOpen(false)} />
           </div>
         )}
+
         {showYourNumber && (
           <YourNumberModal onClose={() => setShowYourNumber(false)} />
         )}
 
-        {/* Privacy Policy Modal */}
         {showPrivacyPolicy && (
           <div className="modal-overlay">
             <div className="modal">
               <h2>Privacy Policy</h2>
               <p>
-                We respect your privacy. Alertify only stores your contact
-                details locally in your browser and never shares data with
-                others.
+                Alertify stores data locally in your browser and never shares
+                it.
               </p>
               <button
                 className="close-btn"
@@ -232,34 +184,11 @@ function App() {
           </div>
         )}
 
-        {/* Footer */}
-        <footer
-          style={{
-            marginTop: "40px",
-            padding: "15px",
-            textAlign: "center",
-            backgroundColor: "#f5f5f5",
-            color: "#555",
-            fontSize: "14px",
-          }}
-        >
-          <p style={{ margin: 0 }}>
-            © 2025 Alertify. All rights reserved. | Developed by Vivek Katapally.{" "}
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowPrivacyPolicy(true);
-              }}
-              style={{
-                color: "#555",
-                textDecoration: "underline",
-                cursor: "pointer",
-              }}
-            >
-              Privacy Policy
-            </a>
-          </p>
+        <footer>
+          © 2025 Alertify •{" "}
+          <span onClick={() => setShowPrivacyPolicy(true)}>
+            Privacy Policy
+          </span>
         </footer>
       </div>
     </div>

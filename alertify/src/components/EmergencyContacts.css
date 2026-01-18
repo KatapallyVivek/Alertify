@@ -1,0 +1,67 @@
+.emergency-section {
+  padding: 30px;
+  text-align: center;
+}
+
+.emergency-section h2 {
+  color: #00ffff;
+  margin-bottom: 25px;
+}
+
+.emergency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.emergency-card {
+  background: rgba(2, 48, 77, 0.95);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.emergency-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.6);
+}
+
+.emergency-card .icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.emergency-card h3 {
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.emergency-card p {
+  color: #00ffff;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.call-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  background: #00ffff;
+  color: #000;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.call-btn:hover {
+  background: #00bfff;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .emergency-grid {
+    grid-template-columns: 1fr;
+  }
+}
