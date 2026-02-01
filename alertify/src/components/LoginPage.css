@@ -20,6 +20,11 @@ body {
   text-align: center;
 }
 
+.logo {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
 .login-title {
   font-size: 26px;
   color: #333;
@@ -84,12 +89,16 @@ input:focus {
   color: #555;
 }
 
-.signup-link a {
-  color: #d32f2f;
-  text-decoration: none;
+#signup {
+  background: rgb(131, 191, 239);
+  border-radius: 25%;
+  color: #0a0a0a;
   font-weight: 500;
+  cursor: pointer;
+  padding: 2px 7px;
+  font-size: 15px;
 }
 
-.signup-link a:hover {
+#signup:hover {
   text-decoration: underline;
 }

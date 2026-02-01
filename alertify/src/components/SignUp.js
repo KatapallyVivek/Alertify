@@ -91,7 +91,7 @@ function SignUp({ onSignUp, onSwitchToLogin }) {
         </form>
         <p className="login-link">
           Already have an account?{" "}
-          <button
+          <button id="login"
            
             onClick={(e) => {
               e.preventDefault();

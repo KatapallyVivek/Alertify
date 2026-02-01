@@ -91,16 +91,19 @@ input:focus {
 .login-link {
   margin-top: 20px;
   font-size: 14px;
-  color: #555;
+  color: #555555;
 }
 
-.login-link a {
-  color: #d32f2f;
-  text-decoration: none;
+#login{
+    background: rgb(131, 191, 239);
+  border-radius: 25%;
+  color: #0a0a0a;
   font-weight: 500;
+  cursor: pointer;
+  padding: 2px 7px;
+  font-size: 15px;
 }
-
-.login-link a:hover {
+#login:hover {
   text-decoration: underline;
 }
 
